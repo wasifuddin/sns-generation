@@ -280,7 +280,7 @@ def generate_captions(client, image_bytes: bytes, mime_type: str, context: str, 
 
     image_part = types.Part.from_bytes(data=image_bytes, mime_type=mime_type)
     response = client.models.generate_content(
-        model="gemini-3.1-flash-lite",
+        model="gemini-2.5-flash",
         contents=[prompt, image_part],
     )
     return parse_captions(response.text)
@@ -329,26 +329,6 @@ def render_caption_card(idx: int, text: str):
     st.code(text, language=None)
 
 
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-# Sidebar – API key
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-with st.sidebar:
-    st.markdown("### ⚙️ Settings")
-    st.text_input(
-        "Gemini API Key",
-        type="password",
-        placeholder="Paste your API key here…",
-        help="Get yours at https://aistudio.google.com/apikey",
-        key="api_key_input",
-    )
-    st.markdown("---")
-    st.markdown(
-        "**How to get your API key:**\n"
-        "1. Go to [Google AI Studio](https://aistudio.google.com/apikey)\n"
-        "2. Create or select a project\n"
-        "3. Generate an API key\n"
-        "4. Paste it above or set the `GEMINI_API_KEY` env variable"
-    )
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # Header
@@ -366,7 +346,7 @@ st.markdown(
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 api_key = get_api_key()
 if not api_key:
-    st.info("👈 Enter your **Gemini API key** in the sidebar to get started.")
+    st.info("👈 Enter your **Gemini API key** in `.streamlit/secrets.toml` to get started.")
     st.stop()
 
 client = genai.Client(api_key=api_key)
