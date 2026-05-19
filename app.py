@@ -280,7 +280,7 @@ def generate_captions(client, image_bytes: bytes, mime_type: str, context: str, 
 
     image_part = types.Part.from_bytes(data=image_bytes, mime_type=mime_type)
     response = client.models.generate_content(
-        model="gemini-2.5-flash",
+        model="gemini-3.1-flash-lite",
         contents=[prompt, image_part],
     )
     return parse_captions(response.text)
