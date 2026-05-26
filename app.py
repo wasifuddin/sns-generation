@@ -308,7 +308,7 @@ def generate_image_from_prompt(client, user_prompt: str, style: str) -> bytes:
     )
 
     response = client.models.generate_images(
-        model="imagen-4.0-generate-001",
+        model="imagen-3.0-fast-generate-001",
         prompt=final_prompt,
         config=types.GenerateImagesConfig(number_of_images=1),
     )
